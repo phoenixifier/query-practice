@@ -6,11 +6,6 @@ const Label = ({ label }) => {
   const labelObj = labels.data.find((queryLabel) => queryLabel.id === label);
   if (!labelObj) return null;
 
-  return (
-    <span key={label} className={labelObj.color}>
-      {labelObj.name}
-    </span>
-  );
+  return <span className={`label ${labelObj.color}`}>{labelObj.name}</span>;
 };
-
 export default Label;

@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 
 import IssueItem from './IssueItem';
 
-export default function IssuesList() {
-  const queryIssues = useQuery(['issues'], () =>
-    fetch('/api/issues').then((res) => res.json()),
-  );
-  console.log(queryIssues.data);
+export default function IssuesList({ labels, status }) {
+  const queryIssues = useQuery(['issues', { labels, status }], () => {
+    const statusStr = status ? `&status=${status}` : '';
+    const labelStr = labels.map((label) => `labels[]=${label}`).join('&');
+    return fetch(`/api/issues?${labelStr}${statusStr}`).then((res) => res.json());
+  });
 
   return (
     <div>
